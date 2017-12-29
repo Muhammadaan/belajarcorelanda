@@ -1,0 +1,141 @@
+<div ng-controller="belajarCtrl">
+    <div class="container-fluid">
+        <div class="row" ng-show="!is_edit &&  !is_viewdetail ">
+            <div class="col-md-12" st-pipe="callServer" st-table="displayed">
+                <div class="panel panel-blank">
+                    <div class="panel-heading">
+                        <h2 class="text-center">
+                            Belajar
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" ng-show="total  == '0'" style="padding-bottom: 20px ">
+                            <div class="col-md-12">
+                                <button autosave="" class="btn btn-primary btn-block" ng-click="mulai()">
+                                    <i class="glyphicon glyphicon-floppy-save">
+                                    </i>
+                                    Saya Siap belajar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div ng-repeat="row in displayed">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <h3>
+                                                {{row.nama}}
+                                            </h3>
+                                            <p>
+                                                {{row.target}}
+                                            </p>
+                                            <div class="btn-group pull-right" role="group">
+                                                <button autosave="" class="btn btn-primary" ng-click="view(row.id)" ng-disabled="row.paham == null">
+                                                    <i class="glyphicon glyphicon-floppy-save">
+                                                    </i>
+                                                    Belajar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-pagination" st-items-by-page="10" st-pagination="" st-template="tpl/blocks/pagination.custom.html">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="is_edit">
+            <div class="col-md-12">
+                <div class="panel panel-blank">
+                    <div class="panel-heading">
+                        <h2 class="text-left float-left">
+                            Belajar
+                        </h2>
+                    </div>
+                    <!-- Materi -->
+                    <!-- ng-if="row.tipe == 'materi'" -->
+                    <div class="panel-body">
+                        <hr>
+                            <div ng-repeat="row in list">
+                                <div class="col-md-12">
+                                    <div style="padding: 10px">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="pull-left">
+                                                    <i class="glyphicon glyphicon-refresh">
+                                                    </i>
+                                                    {{row.nama}}
+                                                </div>
+                                                <div class="btn-group pull-right" role="group">
+                                                    <button autosave="" class="btn btn-primary" ng-click="viewdetail(row.id)">
+                                                        <i class="glyphicon glyphicon-floppy-save">
+                                                        </i>
+                                                        Belajar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </hr>
+                    </div>
+                    <div class="panel-footer" id="form-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="float-right">
+                                    <button class="btn btn-default" ng-click="cancel()">
+                                        <i class="glyphicon glyphicon-arrow-left">
+                                        </i>
+                                        Kembali
+                                    </button>
+                                    <button class="btn btn-primary" ng-click="paham(hari_id)">
+                                        <i class="glyphicon glyphicon-ok">
+                                        </i>
+                                        Saya Memahami 100% Materi Hari ini
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="is_viewdetail">
+            <div class="col-md-12">
+                <div class="panel panel-blank">
+                    <div class="panel-heading">
+                        <h2 class="text-left float-left">
+                            Belajar
+                        </h2>
+                    </div>
+                    <!-- Materi -->
+                    <div class="panel-body">
+                        <div ng-bind-html="isi">
+                        </div>
+                        <!-- {{isi}} -->
+                    </div>
+                    <!-- Materi -->
+                    <!-- Referensi -->
+                    <!-- Tugas -->
+                    <div class="panel-footer" id="form-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="float-right">
+                                    <button class="btn btn-default" ng-click="canceldetail()">
+                                        <i class="glyphicon glyphicon-arrow-left">
+                                        </i>
+                                        Kembali
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

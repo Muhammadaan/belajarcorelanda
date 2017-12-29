@@ -1,0 +1,63 @@
+penjelasa git
+
+target kuranmg besar
+
+Install postman
+
+
+
+hari 4
+
+install core landa
+
+nambah menu Dan hak akses 
+master CRUD
+tugas crud
+
+hari 5
+
+Detail
+tugas detail
+
+hari 6
+Print laporan
+print exel view
+
+
+hari 7
+crud datepicker
+priode
+
+hari 8
+
+Upload Foto base 64
+upload multiple
+update
+ 
+
+ hari 9
+
+ import  exel
+ export exel
+
+ hari 10
+
+Buat Modal
+crud modal
+
+
+hari 11
+
+menampilkan data di dhasboard
+
+hari 12
+	laporan pivot (array)
+
+hari 13 14
+
+
+Semi  project
+
+
+
+
