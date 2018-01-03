@@ -88,46 +88,37 @@ $app->post('/m_siswa/create', function ($request, $response) {
 });
 /*step 5.H*/
 
-// $app->post('/m_hari/updateprofil', function ($request, $response) {
-//     $data = $request->getParams();
-//     $id   = $_SESSION['user']['id'];
 
-//     $db = $this->db;
+/*Update*/
+/*Step 6.B*/
 
-//     $validasi = validasi($data);
-//     if ($validasi === true) {
-//         try {
-//             $model = $db->update("m_hari", $data, array('id' => $id));
-//             return successResponse($response, $model);
-//         } catch (Exception $e) {
-//             return unprocessResponse($response, ['data gagal disimpan']);
-//         }
-//     }
-//     return unprocessResponse($response, $validasi);
-// });
+$app->post('/m_siswa/update', function ($request, $response) {
+    $data = $request->getParams();
+    $db   = $this->db;
 
-// $app->post('/m_hari/update', function ($request, $response) {
-//     $data = $request->getParams();
-//     $db   = $this->db;
+    $validasi = validasi($data);
+    if ($validasi === true) {
+        try {
+            $model = $db->update("m_siswa", $data, array('id' => $data['id']));
+            return successResponse($response, $model);
+        } catch (Exception $e) {
+            return unprocessResponse($response, ['data gagal disimpan']);
+        }
+    }
+    return unprocessResponse($response, $validasi);
+});
+/*Step 6.B*/
 
-//     $validasi = validasi($data);
-//     if ($validasi === true) {
-//         try {
-//             $model = $db->update("m_hari", $data, array('id' => $data['id']));
-//             return successResponse($response, $model);
-//         } catch (Exception $e) {
-//             return unprocessResponse($response, ['data gagal disimpan']);
-//         }
-//     }
-//     return unprocessResponse($response, $validasi);
-// });
+/*Hapus*/
+/*Step 7.B*/
 
-// $app->delete('/m_hari/delete/{id}', function ($request, $response) {
-//     $db = $this->db;
-//     try {
-//         $delete = $db->delete('m_hari', array('id' => $request->getAttribute('id')));
-//         return successResponse($response, ['data berhasil dihapus']);
-//     } catch (Exception $e) {
-//         return unprocessResponse($response, ['data gagal dihapus']);
-//     }
-// });
+$app->delete('/m_siswa/delete/{id}', function ($request, $response) {
+    $db = $this->db;
+    try {
+        $delete = $db->delete('m_hari', array('id' => $request->getAttribute('id')));
+        return successResponse($response, ['data berhasil dihapus']);
+    } catch (Exception $e) {
+        return unprocessResponse($response, ['data gagal dihapus']);
+    }
+});
+/*Step 7.B*/

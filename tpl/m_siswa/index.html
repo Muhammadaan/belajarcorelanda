@@ -90,6 +90,43 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Step  8.1 -->
+                            <div class="col-md-6">
+                                <h6>
+                                    Riwayat Sekolah
+                                </h6>
+                                <table class="table table-striped b-t b-light table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th style="text-align: center; font-weight: bold;">No</th> -->
+                                            <th style="text-align: center; font-weight: bold; width: 90%">
+                                                Sekolah
+                                            </th>
+                                            <th style="text-align: center; font-weight: bold; width: 10%">
+                                                <button class="btn btn-success" ng-click="addDetail()" ng-disabled="is_view">
+                                                    <i class="glyphicon glyphicon-plus">
+                                                    </i>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="detail in riwayat_sekolah">
+                                            <td>
+                                                <input class="x-form" ng-model="detail.riwayat_sekolah" style="width: 540px" type="text">
+                                                </input>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                 <button class="btn btn-danger" ng-click="removeRow($index, detail.id)" ng-disabled="is_view">
+                                            <i class="glyphicon glyphicon-remove">
+                                            </i>
+                                        </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Step  8.1 -->
                         </form>
                     </div>
                     <div class="panel-footer" id="form-footer">
