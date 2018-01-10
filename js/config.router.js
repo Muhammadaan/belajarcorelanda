@@ -106,10 +106,13 @@ angular.module('app').config(
                 .state('master.siswa', {
                     url: '/siswa',
                     templateUrl: 'tpl/m_siswa/index.html',
-                    resolve: {
+            
+                     resolve: {
                         deps: ['$ocLazyLoad',
-                            function($ocLazyLoad) {
-                                return $ocLazyLoad.load('tpl/m_siswa/index.js');
+                            function ($ocLazyLoad) {
+                                return $ocLazyLoad.load(['naif.base64']).then(function () {
+                                    return $ocLazyLoad.load('tpl/m_siswa/index.js');
+                                });
                             }
                         ]
                     }

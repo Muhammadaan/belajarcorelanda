@@ -13,7 +13,8 @@
         "cahkampung/landa-migrasi": "*",
         "wixel/gump": "dev-master",
         "vlucas/phpdotenv": "^2.4",
-        "robmorgan/phinx": "^0.7.0"
+        "robmorgan/phinx": "^0.7.0",
+        "phpoffice/phpexcel": "^1.8"
     },
     "autoload": {
         "psr-4": {

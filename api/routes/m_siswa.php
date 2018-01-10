@@ -12,14 +12,13 @@
 function validasi($data, $custom = array())
 {
     $validasi = array(
-        'nama'       => 'required',
+        'nama' => 'required',
     );
 
     $cek = validate($data, $validasi, $custom);
     return $cek;
 }
 /*Step 5.I*/
-
 
 /*Index*/
 /*Step 5.A*/
@@ -74,11 +73,33 @@ $app->post('/m_siswa/create', function ($request, $response) {
     $data = $request->getParams();
     $db   = $this->db;
 
-    $validasi = validasi($data);
+    // print_r($data);
+
+    $validasi = validasi($data['form']);
     if ($validasi === true) {
 
         try {
-            $model = $db->insert("m_siswa", $data);
+
+            // echo $data['form']['foto']['base64'] ;
+
+           
+            // print_r($file);
+            // exit();
+
+            $model = $db->insert("m_siswa", $data['form']);
+             if (isset($data['form']['foto']['base64'])) {
+                $file                 = base64ToFile($data['form']['foto'], "file", 'foto_siswa_' .$data['form']['nama']);
+                $data['form']['foto'] = '/file/foto_dosen/' . $file['fileName'];
+            }
+
+
+            foreach ($data['detail'] as $value) {
+
+                $value['siswa_id'] = $model->id;
+
+                $modeldetail = $db->insert("m_siswa_detail", $value);
+
+            }
             return successResponse($response, $model);
         } catch (Exception $e) {
             return unprocessResponse($response, ['data gagal disimpan']);
@@ -88,7 +109,6 @@ $app->post('/m_siswa/create', function ($request, $response) {
 });
 /*step 5.H*/
 
-
 /*Update*/
 /*Step 6.B*/
 
@@ -96,10 +116,20 @@ $app->post('/m_siswa/update', function ($request, $response) {
     $data = $request->getParams();
     $db   = $this->db;
 
-    $validasi = validasi($data);
+    $validasi = validasi($data['form']);
     if ($validasi === true) {
         try {
-            $model = $db->update("m_siswa", $data, array('id' => $data['id']));
+            $model = $db->update("m_siswa", $data['form'], array('id' => $data['form']['id']));
+            foreach ($data['detail'] as $vals) {
+                $vals['siswa_id'] = $model->id;
+
+                /* UPDATE ATAU INSERT DATA */
+                if (isset($vals['id'])) {
+                    $modelss = $db->update("m_siswa_detail", $vals, array("id" => $vals['id']));
+                } else {
+                    $modelss = $db->insert('m_siswa_detail', $vals);
+                }
+            }
             return successResponse($response, $model);
         } catch (Exception $e) {
             return unprocessResponse($response, ['data gagal disimpan']);
@@ -115,10 +145,48 @@ $app->post('/m_siswa/update', function ($request, $response) {
 $app->delete('/m_siswa/delete/{id}', function ($request, $response) {
     $db = $this->db;
     try {
-        $delete = $db->delete('m_hari', array('id' => $request->getAttribute('id')));
+        $delete = $db->delete('m_siswa', array('id' => $request->getAttribute('id')));
         return successResponse($response, ['data berhasil dihapus']);
     } catch (Exception $e) {
         return unprocessResponse($response, ['data gagal dihapus']);
     }
 });
 /*Step 7.B*/
+
+/*Step 8.7*/
+
+$app->get('/m_siswa/view/{id}', function ($request, $response) {
+    $db = $this->db;
+    $id = $request->getAttribute('id');
+    try {
+
+        $model = $db->select("*")
+            ->from('m_siswa')
+            ->where('id', '=', $id)
+            ->find();
+
+        $modeldetail = $db->select("*")
+            ->from('m_siswa_detail')
+            ->where('siswa_id', '=', $id)
+            ->findAll();
+
+        return successResponse($response, ['form' => $model, 'modeldetail' => $modeldetail, 'totalItems' => $totalItem]);
+    } catch (Exception $e) {
+        return unprocessResponse($response, ['Terjadi Kesalahan']);
+    }
+});
+/*Step 8.7*/
+
+/*Hapus Detail*/
+/*Step 8.9*/
+
+$app->delete('/m_siswa/deleteDetail/{id}', function ($request, $response) {
+    $db = $this->db;
+    try {
+        $delete = $db->delete('m_siswa_detail', array('id' => $request->getAttribute('id')));
+        return successResponse($response, ['data berhasil dihapus']);
+    } catch (Exception $e) {
+        return unprocessResponse($response, ['data gagal dihapus']);
+    }
+});
+/*Step 8.9.B*/

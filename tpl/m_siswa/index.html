@@ -88,7 +88,29 @@
                                         <input autofocus="" class="x-form w60" ng-disabled="is_view" ng-model="form.nama" type="text">
                                         </input>
                                     </div>
+                                   
                                 </div>
+
+                                 <div class="form-group form-group-sm">
+                                        <label class="col-sm-4 text-form">
+                                            Photo  Siswa
+                                        </label>
+                                           <div class="col-md-5">
+                                        <img class="img-responsive img-thumbnail" ng-if="form.foto.base64 != undefined" src="data:{{form.foto.filetype}};base64,{{form.foto.base64}}" />
+                                        <img class="img-responsive img-thumbnail" ng-if="form.foto == null" src="img/noimage.png" />
+                                        <img class="img-responsive img-thumbnail" ng-if="form.foto != null" src="../file/foto_siswa/{{form.foto}}" />
+                                        <label for="file-upload" class="custom-file-upload bg-primary w100 text-center">
+                                            <i class="fa fa-cloud-upload"></i> Upload Berkas
+                                        </label>
+                                        <div >
+                                            <input id="file-upload" base-sixty-four-input="" ng-model="form.foto" type="file" accept="image/*"/>
+                                        </div>
+                                        <p style="margin-top: 5px">
+                                            <i>*) Upload gambar dengan ukuran 1800 x 600</i>
+                                        </p>
+                                    </div>
+                                    </div>
+                               
                             </div>
                             <!-- Step  8.1 -->
                             <div class="col-md-6">
@@ -117,10 +139,10 @@
                                                 </input>
                                             </td>
                                             <td style="text-align: center;">
-                                                 <button class="btn btn-danger" ng-click="removeRow($index, detail.id)" ng-disabled="is_view">
-                                            <i class="glyphicon glyphicon-remove">
-                                            </i>
-                                        </button>
+                                                <button class="btn btn-danger" ng-click="removeRow($index, detail.id)" ng-disabled="is_view">
+                                                    <i class="glyphicon glyphicon-remove">
+                                                    </i>
+                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -138,11 +160,13 @@
                                         </i>
                                         Batal
                                     </button>
-                                    <button autosave="" class="btn btn-primary" ng-click="save(form)" ng-hide="is_view">
+                                    <!-- Step 8.4 -->
+                                    <button autosave="" class="btn btn-primary" ng-click="save(form,riwayat_sekolah)" ng-hide="is_view">
                                         <i class="glyphicon glyphicon-floppy-save">
                                         </i>
                                         Simpan
                                     </button>
+                                    <!-- Step 8.4 -->
                                 </div>
                             </div>
                         </div>

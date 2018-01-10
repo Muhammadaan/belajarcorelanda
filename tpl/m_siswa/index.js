@@ -51,6 +51,10 @@ app.controller('siswaCtrl', function($scope, Data, toaster) {
         $scope.is_view = false;
         $scope.formtitle = "Edit Data : " + form.nama;
         $scope.form = form;
+        Data.get(control_link + '/view/' + form.id).then(function(response) {
+            $scope.form = response.data.form;
+            $scope.riwayat_sekolah = response.data.modeldetail;
+        });
     };
     /*Step 6.A*/
     /** view */
@@ -62,9 +66,13 @@ app.controller('siswaCtrl', function($scope, Data, toaster) {
     // };
     /** save action */
     /*Step 5.G*/
-    $scope.save = function(form) {
+    $scope.save = function(form, detail) {
         var url = (form.id > 0) ? '/update' : '/create';
-        Data.post(control_link + url, form).then(function(result) {
+        data = {
+            form: form,
+            detail: detail,
+        }
+        Data.post(control_link + url, data).then(function(result) {
             if (result.status_code == 200) {
                 $scope.is_edit = false;
                 $scope.callServer(tableStateRef);
@@ -120,23 +128,38 @@ app.controller('siswaCtrl', function($scope, Data, toaster) {
     };
     /*Step 8.2*/
     /*Hapus Detai;*/
-        /*Step 8.3*/
-        $scope.removeRow = function(paramindex, id) {
-            if (id > 0) {
-                if (confirm("Apa anda yakin akan MENGHAPUS PERMANENT item ini ?")) {
-                    Data.delete(Control_link + '/deleteDetail/' + id).then(function(result) {
+    /*Step 8.3*/
+    $scope.removeRow = function(paramindex, id) {
+        if (id > 0) {
+            swal({
+                title: "Peringatan",
+                text: "Anda Akan Menghapus Permanent I",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Ya,di hapus",
+                cancelButtonText: "Tidak",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function(isConfirm) {
+                if (isConfirm) {
+                    Data.delete(control_link + '/deleteDetail/' + id).then(function(result) {
                         toaster.pop('success', "Berhasil", "Data berhasil dihapus");
                         $scope.riwayat_sekolah.splice(paramindex, 1);
                     });
-                }
-            } else {
-                var comArr = eval($scope.riwayat_sekolah);
-                if (comArr.length > 1) {
-                    $scope.riwayat_sekolah.splice(paramindex, 1);
+                    swal("Terhapus", "Data terhapus.", "success");
                 } else {
-                    alert("Something gone wrong");
+                    swal("Membatalkan", "Membatakan menghapus data", "error");
                 }
+            });
+        } else {
+            var comArr = eval($scope.riwayat_sekolah);
+            if (comArr.length > 1) {
+                $scope.riwayat_sekolah.splice(paramindex, 1);
+            } else {
+                alert("Something gone wrong");
             }
-        };
-        /*Step 8.3*/
+        }
+    };
+    /*Step 8.3*/
 })
