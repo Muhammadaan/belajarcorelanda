@@ -118,5 +118,21 @@ angular.module('app').config(
                     }
                 })
             /*Step 4 */
+            .state('laporan', {
+                    url: '/laporan',
+                    templateUrl: 'tpl/app.html'
+                })
+             .state('laporan.siswa', {
+                    url: '/siswa',
+                    templateUrl: 'tpl/l_siswa/index.html',
+            
+                     resolve: {
+                        deps: ['$ocLazyLoad',
+                            function($ocLazyLoad) {
+                                return $ocLazyLoad.load('tpl/l_siswa/index.js');
+                            }
+                        ]
+                    }
+                })
         }
     ]);

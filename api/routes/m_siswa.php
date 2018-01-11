@@ -80,18 +80,14 @@ $app->post('/m_siswa/create', function ($request, $response) {
 
         try {
 
-            // echo $data['form']['foto']['base64'] ;
+            
 
-           
-            // print_r($file);
-            // exit();
-
-            $model = $db->insert("m_siswa", $data['form']);
-             if (isset($data['form']['foto']['base64'])) {
+          
+            if (isset($data['form']['foto']['base64'])) {
                 $file                 = base64ToFile($data['form']['foto'], "file", 'foto_siswa_' .$data['form']['nama']);
-                $data['form']['foto'] = '/file/foto_dosen/' . $file['fileName'];
+                $data['form']['foto'] = '/api/file/' . $file['fileName'];
             }
-
+              $model = $db->insert("m_siswa", $data['form']);
 
             foreach ($data['detail'] as $value) {
 
@@ -119,6 +115,14 @@ $app->post('/m_siswa/update', function ($request, $response) {
     $validasi = validasi($data['form']);
     if ($validasi === true) {
         try {
+
+
+            if (isset($data['form']['foto']['base64'])) {
+                $file                 = base64ToFile($data['form']['foto'], "file", 'foto_siswa_' .$data['form']['nama']);
+                $data['form']['foto'] = '/api/file/' . $file['fileName'];
+            }
+
+            
             $model = $db->update("m_siswa", $data['form'], array('id' => $data['form']['id']));
             foreach ($data['detail'] as $vals) {
                 $vals['siswa_id'] = $model->id;
@@ -190,3 +194,23 @@ $app->delete('/m_siswa/deleteDetail/{id}', function ($request, $response) {
     }
 });
 /*Step 8.9.B*/
+
+
+/*step 10.B*/
+
+$app->get('/m_siswa/viewPrint/', function ($request, $response) {
+    $db = $this->db;
+    $id = $request->getAttribute('id');
+    try {
+
+        $model = $db->select("*")
+            ->from('m_siswa')
+            ->findAll();
+
+        
+        return successResponse($response, ['form' => $model]);
+    } catch (Exception $e) {
+        return unprocessResponse($response, ['Terjadi Kesalahan']);
+    }
+});
+/*step 10.B*/

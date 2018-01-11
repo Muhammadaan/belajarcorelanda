@@ -1,0 +1,83 @@
+<div ng-controller="laporansiswaCtrl">
+    <div class="container-fluid">
+        <div class="row" ng-show="!is_edit">
+            <div class="col-md-12" st-pipe="callServer" st-table="displayed">
+                <div class="panel panel-blank">
+                    <div class="panel-heading">
+                        <h2 class="text-left float-left">
+                            Master Siswa
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="x-header">
+                            <div class="row">
+                                
+                                <!-- Step 10 -->
+                                    <div class="col-sm-12 ">
+                                       
+                                        <button class="btn btn-primary pull-left" ng-click="view()" ng-hide="is_view" style="">
+
+                                            Tampilkan Data Siswa
+                                        </button>
+                                         <button class="btn btn-danger pull-left" ng-print="" print-element-id="laporan" ng-hide="is_view" style="">
+                                           
+                                            Print Siswa
+                                        </button>
+                                         <button class="btn btn-success pull-left" ng-click="create()" ng-hide="is_view" style="">
+                                            
+                                           Export Excel
+                                        </button>
+                                    </div>
+                                 <!-- Step 10 -->
+                            
+                            </div>
+                        </div>
+
+
+                      
+                        <div class="table-pagination" st-items-by-page="10" st-pagination="" st-template="tpl/blocks/pagination.custom.html">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="row" ng-show="is_tampilkan">
+            <div class="col-md-12">
+                <div class="panel panel-blank">
+                    <div class="panel-heading">
+                        <h2 class="text-left float-left">
+                           Laporan
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+
+                        <!-- step 10.C -->
+                      
+                        <div id="laporan">
+
+                                <table class="table table-bordered table-striped">
+                              
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Siswa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="(key, value) in form">
+                                            <td> {{value.nama}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            
+                        </div>
+                        <!-- step 10.C -->
+
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+  
+    </div>
+</div>

@@ -81,6 +81,26 @@
                         </li>
                     </ul>
                 </li>
+                 <li class="dropdown" ng-show="user.akses.laporan_siswa" >
+                    <a aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                        <i class="glyphicon glyphicon-th-large icon text-info-lter">
+                        </i>
+                    Laporan
+                        <span class="caret">
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- Step 3 -->
+                        <li ng-show="user.akses.laporan_siswa">
+                            <a ui-sref="laporan.siswa">
+                                <i class="glyphicon glyphicon-menu-right">
+                                </i>
+                                Laporan Siswa
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </li>
                 <li ng-show="user.akses.belajar_belajar">
                     <a aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button" ui-sref="belajar.belajar">
                         <i class="glyphicon glyphicon-home icon text-info-lter">

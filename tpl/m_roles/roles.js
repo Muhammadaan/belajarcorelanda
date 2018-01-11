@@ -175,6 +175,7 @@ app.controller('rolesCtrl', function($scope, Data, toaster) {
             "master_user": false,
             /*step 2*/
             "master_siswa": false,
+            "laporan_siswa": false,
              /*step 2*/
         };
         angular.forEach(akses, function($value, $key) {
