@@ -80,14 +80,11 @@ $app->post('/m_siswa/create', function ($request, $response) {
 
         try {
 
-            
-
-          
             if (isset($data['form']['foto']['base64'])) {
-                $file                 = base64ToFile($data['form']['foto'], "file", 'foto_siswa_' .$data['form']['nama']);
+                $file                 = base64ToFile($data['form']['foto'], "file", 'foto_siswa_' . $data['form']['nama']);
                 $data['form']['foto'] = '/api/file/' . $file['fileName'];
             }
-              $model = $db->insert("m_siswa", $data['form']);
+            $model = $db->insert("m_siswa", $data['form']);
 
             foreach ($data['detail'] as $value) {
 
@@ -116,13 +113,11 @@ $app->post('/m_siswa/update', function ($request, $response) {
     if ($validasi === true) {
         try {
 
-
             if (isset($data['form']['foto']['base64'])) {
-                $file                 = base64ToFile($data['form']['foto'], "file", 'foto_siswa_' .$data['form']['nama']);
+                $file                 = base64ToFile($data['form']['foto'], "file", 'foto_siswa_' . $data['form']['nama']);
                 $data['form']['foto'] = '/api/file/' . $file['fileName'];
             }
 
-            
             $model = $db->update("m_siswa", $data['form'], array('id' => $data['form']['id']));
             foreach ($data['detail'] as $vals) {
                 $vals['siswa_id'] = $model->id;
@@ -195,7 +190,6 @@ $app->delete('/m_siswa/deleteDetail/{id}', function ($request, $response) {
 });
 /*Step 8.9.B*/
 
-
 /*step 10.B*/
 
 $app->get('/m_siswa/viewPrint/', function ($request, $response) {
@@ -207,10 +201,45 @@ $app->get('/m_siswa/viewPrint/', function ($request, $response) {
             ->from('m_siswa')
             ->findAll();
 
-        
         return successResponse($response, ['form' => $model]);
     } catch (Exception $e) {
         return unprocessResponse($response, ['Terjadi Kesalahan']);
     }
 });
 /*step 10.B*/
+
+/* Step 11.A*/
+
+$app->get('/m_siswa/export', function ($request, $response) {
+
+    $sql   = $this->db;
+    $siswa = $sql->select("*")
+        ->from('m_siswa')
+        ->findAll();
+
+    $path        = 'file/siswa.xls';
+    $objReader   = PHPExcel_IOFactory::createReader('Excel5');
+    $objPHPExcel = $objReader->load($path);
+
+    $row = 2;
+    $no  = 1;
+    foreach ($siswa as $key => $val) {
+
+        $objPHPExcel->getActiveSheet()
+            ->setCellValue('A' . $row, $no)
+            ->setCellValue('B' . $row, $val->nama)
+            ->getRowDimension($row)
+            ->setRowHeight(20);
+
+        $row++;
+        $no++;
+    }
+
+    header("Content-type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment;Filename=Data_siswa.xls");
+
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+    $objWriter->save('php://output');
+});
+
+/* Step 11.A*/

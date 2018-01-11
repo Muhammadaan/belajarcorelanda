@@ -11,7 +11,6 @@ app.controller('laporansiswaCtrl', function($scope, Data, toaster) {
     /*step 10.A*/
    
    
-
     $scope.view = function(form) {
       
         $scope.is_view = false;
@@ -23,7 +22,20 @@ app.controller('laporansiswaCtrl', function($scope, Data, toaster) {
             $scope.form = response.data.form;
         });
     };
+
+      /*step 10.A*/
+
+      /*Step 11*/
+
+    $scope.export = function() {
+      
+        window.location = 'api/m_siswa/export';
+    
+    };
+    
+      /*Step 11*/
+   
    
     
-    /*step 10.A*/
+  
 })
