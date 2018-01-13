@@ -134,5 +134,17 @@ angular.module('app').config(
                         ]
                     }
                 })
+              .state('laporan.nilai', {
+                    url: '/nilai',
+                    templateUrl: 'tpl/l_nilai/index.html',
+            
+                     resolve: {
+                        deps: ['$ocLazyLoad',
+                            function($ocLazyLoad) {
+                                return $ocLazyLoad.load('tpl/l_nilai/index.js');
+                            }
+                        ]
+                    }
+                })
         }
     ]);

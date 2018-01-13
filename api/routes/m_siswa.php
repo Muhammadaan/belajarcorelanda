@@ -61,6 +61,9 @@ $app->get('/m_siswa/index', function ($request, $response) {
     }
 
     $models    = $db->findAll();
+
+
+ 
     $totalItem = $db->count();
 
     return successResponse($response, ['list' => $models, 'totalItems' => $totalItem]);
